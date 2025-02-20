@@ -10,7 +10,12 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center space-x-2">
-            <Home className="w-8 h-8 text-indigo-600" />
+            {/* <Home className="w-8 h-8 text-indigo-600" /> */}
+            <img 
+            src="https://know.dayrade.com/public/stylesheets/icon/Nester-Logo.svg" 
+            alt="Logo" 
+            className="w-8 h-8 rounded-full"
+          />
             <span className="text-xl font-serif">Luxury Real Estate</span>
           </Link>
 

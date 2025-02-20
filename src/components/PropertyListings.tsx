@@ -177,15 +177,6 @@ const PropertyListings: React.FC = () => {
         console.error("Error fetching data:", error);
       });
   }, []);
-  const filteredProperties = properties.filter(property => {
-    const matchesSearch = property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         property.address.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesPrice = property.price >= priceRange[0] && property.price <= priceRange[1];
-    const matchesType = !selectedType || property.type === selectedType;
-    
-    return matchesSearch && matchesPrice && matchesType;
-  });
-
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -259,10 +250,10 @@ const PropertyListings: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {PropertiesList?.map(property => (
-            <div key={property.fields.propertyId} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            <div onClick={() => window.open(`/?id=${property.fields.propertyId}`, '_blank')} key={property.fields.propertyId} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="relative aspect-[4/3]">
                 <img
-                  src={property?.fields?.image || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80'}
+                  src={property?.fields?.image.text || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80'}
                   alt={property?.fields?.title ||'TITLE'}
                   className="w-full h-full object-cover"
                 />

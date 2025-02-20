@@ -1,108 +1,77 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, GripVertical } from 'lucide-react';
 import { useApi } from '../context/ApiContext';
-const images = [
-  {
-    original: "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&q=80",
-    styles: {
-      contemporary: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80",
-      traditional: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
-      postModern: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
-      eclectic: "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=80"
-    }
-  },
-  {
-    original: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80",
-    styles: {
-      contemporary: "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&q=80",
-      traditional: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&q=80",
-      postModern: "https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&q=80",
-      eclectic: "https://images.unsplash.com/photo-1600566752547-c4c9586390c9?auto=format&fit=crop&q=80"
-    }
-  }
-];
 
 const ImageGallery: React.FC = () => {
   const { data, loading, error } = useApi();
-  const PropertyDetails =data;
-  console.log('PropertyDetails in image gallery',PropertyDetails)
+  const PropertyDetails = data;
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedStyle, setSelectedStyle] = useState<string>('original');
   const [isComparing, setIsComparing] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(50);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const isDragging = useRef(false);
 
   const styles = [
-    { id: 'original', label: 'Original',value:0 },
-    { id: 'contemporary', label: 'Contemporary',value:1 },
-    { id: 'traditional', label: 'Traditional' ,value:2},
-    { id: 'postModern', label: 'Post Modern',value:3 },
-    { id: 'eclectic', label: 'Eclectic' ,value:4}
+    { id: 'original', label: 'Original', value: 0 },
+    { id: 'eclectic', label: 'Eclectic', value: 1 },
+    { id: 'contemporary', label: 'Contemporary', value: 2 },
+    { id: 'traditional', label: 'Traditional', value: 3 },
+    { id: 'postModern', label: 'Post Modern', value: 4 },
   ];
-
+  let availableStyles :any
   const getCurrentImage = () => {
-    if (selectedStyle === 'original') {
-      if (!PropertyDetails.upscaleImagesArray) return '';
-      // return images[currentImageIndex].original;
-      return PropertyDetails.upscaleImagesArray[currentImageIndex].fields.webpSrc.text;
-    }
-    console.log('selectedStyle',selectedStyle)
-    console.log('Style value', styles.find(style => 
-      style.id === selectedStyle)?.value || 0);
-  
-    // return images[currentImageIndex].styles[selectedStyle as keyof typeof images[0]['styles']];
-    // return PropertyDetails.upscaleImagesArray[currentImageIndex].upscaleImages[0].fields.image_url.text;
-    let selectedProperty = PropertyDetails.upscaleImagesArray[currentImageIndex];
-    if(selectedProperty)
+    if (!PropertyDetails?.upscaleImagesArray) return '';
+    const currentProperty = PropertyDetails.upscaleImagesArray[currentImageIndex];
+    if(currentProperty?.upscaleImages)
     {
-      let upscaleImages = selectedProperty.upscaleImages;
-      if (upscaleImages && upscaleImages.length > 0) {
-        let selectedFilterIndex = styles.find(style => 
-          style.id === selectedStyle
-        )?.value || 0;
-      
-        const selectedImage = selectedProperty?.upscaleImages.find((image: any) => 
-          Number(image?.fields?.Design_Style) === selectedFilterIndex
-        );
-      
-        if (selectedImage) {
-          return selectedImage.fields.image_url.text;
-        }
-      
-        // Fallback return if no matching image is found
-        return upscaleImages[0].fields.image_url.text;
-      }
-      
+      availableStyles = styles.filter(style =>
+        currentProperty?.upscaleImages.some((image:any) => 
+          Number(image?.fields?.Design_Style) === style.value
+    )
+  );
+}
+    if (selectedStyle === 'original') {
+      return currentProperty.fields?.webpSrc?.text || currentProperty.fields?.jpgSrc?.text;
+    } else {
+      const upscaleImages = currentProperty?.upscaleImages;
+      const selectedFilterIndex =
+        styles.find(style => style.id === selectedStyle)?.value || 0;
+      const selectedImage = upscaleImages.find(
+        (image: any) => Number(image?.fields?.Design_Style) === selectedFilterIndex
+      );
+      return selectedImage
+        ? selectedImage.fields?.image_url?.text
+        : upscaleImages[0].fields?.image_url?.text;
     }
   };
+
+  // Use document-level mouse move/up for smoother slider dragging (perfect UI)
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging.current || !containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
+      const percentage = (x / rect.width) * 100;
+      setSliderPosition(percentage);
+    };
+
+    const handleMouseUp = () => {
+      isDragging.current = false;
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
 
   const handleMouseDown = () => {
     isDragging.current = true;
   };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-  };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging.current || !containerRef.current) return;
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-    const percentage = (x / rect.width) * 100;
-    setSliderPosition(percentage);
-  };
-
-  useEffect(() => {
-    window.addEventListener('mouseup', handleMouseUp);
-    window.addEventListener('mouseleave', handleMouseUp);
-
-    return () => {
-      window.removeEventListener('mouseup', handleMouseUp);
-      window.removeEventListener('mouseleave', handleMouseUp);
-    };
-  }, []);
 
   const getActiveStyleLabel = () => {
     return styles.find(style => style.id === selectedStyle)?.label || 'Original';
@@ -112,38 +81,43 @@ const ImageGallery: React.FC = () => {
     <section className="my-16">
       <div className="mb-8">
         <h2 className="text-3xl font-serif mb-3">Property Gallery</h2>
-        <p className="text-gray-600">Explore different interior design styles for this property</p>
+        <p className="text-gray-600">
+          Explore different interior design styles for this property
+        </p>
       </div>
-      
-      <div 
+
+      <div
         ref={containerRef}
         className="relative h-[600px] mb-8 rounded-lg overflow-hidden select-none"
-        onMouseMove={handleMouseMove}
       >
         {isComparing ? (
           <div className="relative h-full">
-            {/* Original Image (Before) */}
-            <img 
+            {/* Background Image */}
+            <img
               src={getCurrentImage()}
               alt="Original view"
               className="absolute inset-0 w-full h-full object-cover"
             />
-            
-            {/* Styled Image (After) */}
-            <div 
+
+            {/* Foreground Image with Clipping */}
+            <div
               className="absolute inset-0 overflow-hidden"
-              style={{ width: `${sliderPosition}%` }}
+              style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
-              <img 
-                src={PropertyDetails?.upscaleImagesArray[currentImageIndex]?.fields?.webpSrc?.text || PropertyDetails?.upscaleImagesArray[currentImageIndex]?.fields?.jpgSrc?.text}
+              <img
+                src={
+                  PropertyDetails?.upscaleImagesArray?.[currentImageIndex]?.fields
+                    ?.webpSrc?.text ||
+                  PropertyDetails?.upscaleImagesArray?.[currentImageIndex]?.fields
+                    ?.jpgSrc?.text
+                }
                 alt="Styled view"
-                className="absolute inset-0  h-full object-cover"
-                style={{ maxWidth: 'none' ,width: '79.2vw'}}
+                className="absolute inset-0 w-full h-full object-cover"
               />
             </div>
 
             {/* Slider Handle */}
-            <div 
+            <div
               className="absolute inset-y-0"
               style={{ left: `${sliderPosition}%` }}
             >
@@ -167,51 +141,90 @@ const ImageGallery: React.FC = () => {
             </div>
           </div>
         ) : (
-          <img 
-            src={getCurrentImage()} 
-            alt="Property view" 
+          <img
+            src={getCurrentImage()}
+            alt="Property view"
             className="w-full h-full object-cover rounded-lg transition-opacity duration-500"
           />
         )}
-        
-        <button 
-          onClick={() => setCurrentImageIndex(prev => Math.max(0, prev - 1))}
+
+        {/* Navigation Buttons */}
+        <button
+          onClick={() =>
+            setCurrentImageIndex(prev => Math.max(0, prev - 1))
+          }
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full hover:bg-white transition-colors"
           disabled={currentImageIndex === 0}
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
-        
-        <button 
-          onClick={() => setCurrentImageIndex(prev => Math.min(PropertyDetails?.upscaleImagesArray.length - 1, prev + 1))}
+
+        <button
+          onClick={() =>
+            setCurrentImageIndex(prev =>
+              Math.min(
+                PropertyDetails?.upscaleImagesArray.length - 1,
+                prev + 1
+              )
+            )
+          }
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/90 p-3 rounded-full hover:bg-white transition-colors"
-          disabled={currentImageIndex === PropertyDetails?.upscaleImagesArray?.length - 1}
+          disabled={
+            currentImageIndex ===
+            PropertyDetails?.upscaleImagesArray?.length - 1
+          }
         >
           <ChevronRight className="w-6 h-6" />
         </button>
       </div>
 
+      {/* Style Selection Buttons */}
       <div className="flex flex-wrap justify-center gap-4">
-        {styles.map(style => (
-          <button
-            key={style.id}
-            onClick={() => {
-              setSelectedStyle(style.id);
-              setIsComparing(style.id !== 'original');
-              setSliderPosition(50);
-            }}
-            className={`px-6 py-3 rounded-lg transition-all ${
-              selectedStyle === style.id
-                ? 'bg-indigo-600 text-white shadow-lg scale-105'
-                : 'bg-gray-100 hover:bg-gray-200'
-            }`}
-          >
-            {style.label}
-          </button>
-        ))}
+      {/* <button
+    key='original'
+    onClick={() => {
+      setSelectedStyle('original');
+      setIsComparing('original' !== 'original');
+      setSliderPosition(50);
+    }}
+    className={`px-6 py-3 rounded-lg transition-all ${
+      selectedStyle ==='original'
+        ? 'bg-indigo-600 text-white shadow-lg scale-105'
+        : 'bg-gray-100 hover:bg-gray-200'
+    }`}
+  >
+  Original
+  </button> */}
+{styles.map((style) => {
+  const isAvailable = style.id === "original" || availableStyles.some((s: any) => s.id === style.id);
+
+  return (
+    <button
+      key={style.id}
+      onClick={() => {
+        if (!isAvailable) return;
+        setSelectedStyle(style.id);
+        setIsComparing(style.id !== 'original');
+        setSliderPosition(50);
+      }}
+      disabled={!isAvailable}
+      className={`px-6 py-3 rounded-lg transition-all ${
+        selectedStyle === style.id
+          ? 'bg-indigo-600 text-white shadow-lg scale-105'
+          : isAvailable
+          ? 'bg-gray-100 hover:bg-gray-200'
+          : 'bg-[#f1f1f1] text-[#d9d9d9] cursor-not-allowed'
+      }`}
+    >
+      {style.label}
+    </button>
+  );
+})}
+
+
       </div>
     </section>
   );
-}
+};
 
 export default ImageGallery;
