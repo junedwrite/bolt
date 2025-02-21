@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
             <img 
             src="https://know.dayrade.com/public/stylesheets/icon/Nester-Logo.svg" 
             alt="Logo" 
-            className="w-8 h-8 rounded-full"
+            className="w-8 h-8"
           />
             <span className="text-xl font-serif">Luxury Real Estate</span>
           </Link>

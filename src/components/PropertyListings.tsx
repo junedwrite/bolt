@@ -194,9 +194,14 @@ const PropertyListings: React.FC = () => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 to-black/30" />
         <div className="absolute inset-0 flex flex-col justify-center items-center text-white">
           <div className="max-w-4xl text-center px-4 mb-8">
+          <img 
+            src="https://know.dayrade.com/public/stylesheets/icon/Nester-Logo-White.svg" 
+            alt="Logo" 
+            className="w-16 h-16 mb-8 mx-auto"
+          />
             <h1 className="text-6xl font-serif mb-6">Find Your Dream Home</h1>
             <p className="text-xl font-light max-w-2xl mx-auto mb-8">
-              Discover the finest luxury properties in Los Angeles and Beverly Hills
+            Discover the finest luxury properties in the Cayman Islands
             </p>
           </div>
           

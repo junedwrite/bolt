@@ -40,7 +40,7 @@ function PropertyDetail() {
         <div className="absolute inset-0 flex flex-col justify-center items-center text-white">
           <div className="max-w-4xl text-center px-4">
           <img 
-            src="https://know.dayrade.com/public/stylesheets/icon/Nester-Logo.svg" 
+            src="https://know.dayrade.com/public/stylesheets/icon/Nester-Logo-White.svg" 
             alt="Logo" 
             className="w-16 h-16 mb-8 mx-auto"
           />
