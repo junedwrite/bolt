@@ -1,63 +1,58 @@
-import React from 'react';
-import { School, Train, Trees as Tree, Coffee, ShoppingBag, Utensils } from 'lucide-react';
+import React from "react";
+import {
+  School,
+  Train,
+  Trees as Tree,
+  Coffee,
+  ShoppingBag,
+  Utensils,
+} from "lucide-react";
 
-const NeighborhoodInfo: React.FC = () => {
-  const amenities = [
-    {
-      category: 'Education',
-      icon: School,
-      items: [
-        { name: 'Beverly Hills High School', distance: '0.5 miles' },
-        { name: 'Beverly Vista Middle School', distance: '0.8 miles' }
-      ]
-    },
-    {
-      category: 'Transportation',
-      icon: Train,
-      items: [
-        { name: 'Beverly Hills Station', distance: '1.2 miles' },
-        { name: 'LAX Airport', distance: '12 miles' }
-      ]
-    },
-    {
-      category: 'Parks & Recreation',
-      icon: Tree,
-      items: [
-        { name: 'Beverly Gardens Park', distance: '0.3 miles' },
-        { name: 'Will Rogers Memorial Park', distance: '0.7 miles' }
-      ]
-    },
-    {
-      category: 'Dining & Entertainment',
-      icon: Utensils,
-      items: [
-        { name: 'Spago Beverly Hills', distance: '0.4 miles' },
-        { name: 'Mastro\'s Steakhouse', distance: '0.6 miles' }
-      ]
-    },
-    {
-      category: 'Shopping',
-      icon: ShoppingBag,
-      items: [
-        { name: 'Rodeo Drive', distance: '0.5 miles' },
-        { name: 'Beverly Center', distance: '1.5 miles' }
-      ]
-    },
-    {
-      category: 'Cafes',
-      icon: Coffee,
-      items: [
-        { name: 'Blue Bottle Coffee', distance: '0.2 miles' },
-        { name: 'Urth Caffé', distance: '0.4 miles' }
-      ]
-    }
-  ];
+interface Place {
+  name: string;
+  address?: string;
+  rating?: number;
+  distance?: string | number;
+}
+
+interface NeighborhoodDetails {
+  [key: string]: Place[];
+}
+
+interface NeighborhoodInfoProps {
+  neighbersDetails: NeighborhoodDetails;
+}
+
+const categoryIcons: { [key: string]: any } = {
+  Education: School,
+  Transportation: Train,
+  "Parks & Recreation": Tree,
+  "Dining & Entertainment": Utensils,
+  Shopping: ShoppingBag,
+  Cafes: Coffee,
+};
+
+const NeighborhoodInfo: React.FC<NeighborhoodInfoProps> = ({
+  neighbersDetails,
+}) => {
+  console.log("neighbersDetails", neighbersDetails);
+
+  const amenities = Object.entries(neighbersDetails).map(([category, places]) => ({
+    category,
+    icon: categoryIcons[category] || Utensils, // Default icon if category is missing
+    items: places.slice(0, 3).map((place) => ({ // Slice to max 3 items
+      name: place.name,
+      distance: place.distance  || "Unknown distance",
+    })),
+  }));
 
   return (
     <section className="my-16">
       <div className="mb-8">
         <h2 className="text-3xl font-serif mb-3">Neighborhood</h2>
-        <p className="text-gray-600">Discover the prestigious Beverly Hills community and nearby amenities</p>
+        <p className="text-gray-600">
+          Discover the prestigious Beverly Hills community and nearby amenities
+        </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -83,6 +78,6 @@ const NeighborhoodInfo: React.FC = () => {
       </div>
     </section>
   );
-}
+};
 
 export default NeighborhoodInfo;

@@ -32,7 +32,8 @@ export const ApiProvider = ({ children }: { children: ReactNode }) => {
             return;
         }
 
-        const API_URL = `https://know.dayrade.com/property/upscale/${propertyId}`;
+        const API_URL = `https://nester.studio/property/upscale/${propertyId}`;
+        // const API_URL = `https://know.dayrade.com/property/upscale/${propertyId}`;
         // const API_URL = `http://localhost:5000/property/upscale/${propertyId}`;
 
         axios.get(API_URL)

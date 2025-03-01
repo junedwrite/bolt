@@ -24,6 +24,7 @@ interface PropertyAmenitiesProps {
   useEffect(() => {
     if (data && data.PropertyDetailsFromDB) {
       setPropertyDetails(data.PropertyDetailsFromDB);
+      console.log('data.PropertyDetails?.fields?.description',data.PropertyDetails?.fields?.description)
     }
   }, [data]);
   return (
@@ -55,8 +56,13 @@ interface PropertyAmenitiesProps {
 
         <div>
           <h3 className="text-2xl font-serif mb-4">Property Description</h3>
-          <p className="text-gray-600 leading-relaxed">{propertyDetails?.description || "No description available."}</p>
-          
+          <div className="text-gray-600 leading-relaxed">
+          {data.PropertyDetails?.fields?.description
+            ?.split("\n")
+            .map((paragraph:string, index:number) => (
+              <p key={index} className="mb-4">{paragraph}</p>
+            )) || <p>No description available.</p>}
+        </div>
           
         </div>
       </div>

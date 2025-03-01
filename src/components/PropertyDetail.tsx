@@ -4,6 +4,7 @@ import ChatBot from './ChatBot';
 import ImageGallery from './ImageGallery';
 import PropertyDetails from './PropertyDetails';
 import ProspectusModal from './ProspectusModal';
+import Flipbook from './flipbook';
 import NeighborhoodInfo from './NeighborhoodInfo';
 import FloorPlan from './FloorPlan';
 import { useApi } from '../context/ApiContext';
@@ -59,8 +60,9 @@ function PropertyDetail() {
       <main className="max-w-7xl mx-auto px-4 py-12">
         <PropertyDetails />
         <ImageGallery />
-        <FloorPlan locationUrl={propertyDetails?.locationUrl} />
-        <NeighborhoodInfo />
+        <FloorPlan locationUrl={propertyDetails?.locationUrl || null} />
+        <NeighborhoodInfo neighbersDetails={data?.neighbersDetails?.neighbors ||[]} />
+        {/* <NeighborhoodInfo locationUrl={propertyDetails?.locationUrl} /> */}
         
         {/* Chat Bot Toggle */}
         {/* <button 
@@ -86,6 +88,7 @@ At the end of your journey you can enter your email address and we will send you
           <ProspectusModal onClose={() => setIsProspectusOpen(false)} />
         )}
       </main>
+      <Flipbook/>
     </div>
   );
 }
