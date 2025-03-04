@@ -88,7 +88,7 @@ At the end of your journey you can enter your email address and we will send you
           <ProspectusModal onClose={() => setIsProspectusOpen(false)} />
         )}
       </main>
-      <Flipbook/>
+      <Flipbook imageUrl='https://www.cireba.com/caches/1061x680/2024-11-12-07-59-12-1675298731105HotelResidencesfromWedgeofproperty6K1101-min.webp'/>
     </div>
   );
 }
