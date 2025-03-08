@@ -68,7 +68,7 @@ const NeighborhoodInfo: React.FC<NeighborhoodInfoProps> = ({
                 {category.items.map((item) => (
                   <li key={item.name} className="flex justify-between items-center">
                     <span className="text-gray-800">{item.name}</span>
-                    <span className="text-gray-500 text-sm">{item.distance}</span>
+                    <span className="text-gray-500 text-sm">{item.distance} miles</span>
                   </li>
                 ))}
               </ul>

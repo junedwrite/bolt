@@ -11,7 +11,7 @@ function App() {
     <div className="min-h-screen bg-gray-50">
       <Navbar />
       <Routes>
-        <Route path="/" element={<PropertyDetail />} />
+        <Route path="/property-details" element={<PropertyDetail />} />
         <Route path="/listings" element={<PropertyListings />} />
       </Routes>
     </div>

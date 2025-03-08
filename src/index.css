@@ -19,9 +19,57 @@
     text-align: center;
     height: 100%;
     background: white;
-    /* border: 1px solid #ccc; */
+    /* border: 1px solid #ccc; */    
   }
-  
+ 
+
+/* Shadow effect on the left page (on the right side) */
+/* .leftPage::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 100%;
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent);
+    z-index: 3;
+}
+.rightPage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent);
+  z-index: 3;
+} */
+
+/* Shadow effect on the left page (right side) */
+.leftPage::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent);
+  z-index: 3;
+}
+
+/* Shadow effect on the right page (left side) */
+.rightPage::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent);
+  z-index: 3;
+}
+
+
   .image-page {
     padding: 0;
     margin: 0;
@@ -61,10 +109,10 @@
   }
   
   .purchase-price {
-    font-size: 26px;
-    font-weight: bold;
+    font-size: 20px;
+    /* font-weight: bold; */
     color: #000;
-    font-family: "Times New Roman", Times, serif;
+    font-family: "georgia";
     margin: 0;
   }
   
@@ -182,3 +230,18 @@
 }
 
 /* seven page */
+
+/* description */
+.description-container {
+  /* style={{ textAlign: 'center', paddingLeft: '3%', paddingBottom: "10%", fontWeight: '500', fontSize: 'x-large' ,fontFamily:"georgia"} */
+  text-align: center;
+  padding-left: 3%;
+  padding-bottom: 10%;
+  font-weight: 500;
+  font-size: large;
+  font-family: "georgia";
+}
+.description-font{
+  font-family: "georgia";
+}
+/* description */

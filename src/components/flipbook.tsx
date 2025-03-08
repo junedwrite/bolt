@@ -32,7 +32,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         useMouseEvents={true}
         className="flipbook"
         // style={{ border: "1px solid black", overflow: "hidden" }} // Ensure content doesn't overflow
-        style={{ boxShadow: "2px 4px 10px rgba(0, 0, 0, 0.2)", background: "#fff" }} // Ensure content doesn't overflow
+        style={{ boxShadow: "3px 3px 6px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5)" }} // Ensure content doesn't overflow
         startPage={0}
         size="fixed" // Prevent unexpected resizing
         usePortrait={false} // Disabling portrait mode
@@ -72,7 +72,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/* --{1}---------2-start----------------------------------------------------Page 2 and page 3 compined ----------------------------------------------------------------*/}
         {/* Page 2 - Left Half of Image */}
-        <div className="page image-page left">
+        <div className="page image-page left leftPage">
           <div
             className="image-half"
             style={{
@@ -92,7 +92,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/* Page 3 - Right Half of Image */}
-        <div className="page image-page right">
+        <div className="page image-page right rightPage">
           <div
             className="image-half"
             style={{
@@ -126,7 +126,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/*--{2}--------3-start-------------------------------------------------- Page 4 and page 5 compined ----------------------------------------------------------------- */}
 
-        <div className="page">
+        <div className="page leftPage">
           <div style={{ paddingTop: '30%' }} className="flex justify-end w-full h-[600px]">
             <div
               // className=""
@@ -144,7 +144,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/* Page 7 - Right 30% */}
-        <div className="page">
+        <div className="page rightPage">
           <div style={{ paddingTop: '30%' }} className="flex w-full h-[600px]">
             <div
               style={{
@@ -171,7 +171,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/*--{3}-------4-start---------------------------------------------------- Page 6 and page 7 compined ----------------------------------------------------------------- */}
        {/* Page 6 - Left 70% */}
-        <div className="page">
+        <div className="page leftPage">
           <p className="description-font" style={{ textAlign: 'left', paddingLeft: '3%',  fontSize: 'x-large' }}>{upscaleImagesArray[1]?.fields?.roomType || upscaleImagesArray[1]?.fields?.imageType}</p>
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex justify-end w-full h-[450px]">
             <div
@@ -191,7 +191,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/* Page 7 - Right 30% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: 'x-large' }}>-</h1>
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex w-full h-[450px]">
             <div
@@ -220,7 +220,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/*---{4}-------5-start-------------------2 -combined-page--------\\\\\\\\\------------------------ Page 8 and page 9 compined ----------------------------------------------------------------- */}
         {/* Page 8 - Left 70% */}
-        <div className="page">
+        <div className="page leftPage">
           <p className="description-font" style={{ textAlign: 'left', paddingLeft: '3%',  fontSize: 'x-large' }}>{upscaleImagesArray[2]?.fields?.roomType || upscaleImagesArray[2]?.fields?.imageType}</p>
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex justify-end w-full h-[450px]">
             <div
@@ -241,7 +241,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/* Page 9 - Right 30% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: 'x-large' }}>-</h1>
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex w-full h-[450px]">
             <div
@@ -272,7 +272,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/*----{5}---------6-start----------------3-combine page-------------------------------- Page 10 and page 11 compined ----------------------------------------------------------------- */}
         {/* Left 70% */}
-        <div className="page">
+        <div className="page leftPage">
           {/* <p style={{textAlign:'left',paddingLeft:'3%',fontWeight:'500',fontSize:'x-large'}}>Living Room</p> */}
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex justify-end w-full h-[450px]">
             <div className="sixth-page-thumbnail-container-a1b2c3">
@@ -305,7 +305,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/*  Right 95% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: '0px' }}>-</h1>
           <div style={{ paddingLeft: '3%', paddingRight: '3%' }}>
             <div style={{ maxHeight: "200px", maxWidth: "270px", minWidth: "200px", overflow: "auto", padding: "2px" }}>
@@ -348,7 +348,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/*-----{6}---------7--start---------------------------------------------- Page 12 and page 13 compined ----------------------------------------------------------------- */}
         {/* Page 12 - Left 70% */}
-        <div className="page">
+        <div className="page leftPage">
           <div className="sixth-page-container">
             <div>
               <p  className="sixth-page-title description-font">{upscaleImagesArray[4]?.fields?.roomType || upscaleImagesArray[4]?.fields?.imageType}</p>
@@ -385,7 +385,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/* Page 13 - Right 30% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: 'x-large' }}>-</h1>
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex w-full h-[194px]">
             <div
@@ -431,7 +431,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/*-----{7}--------8--start----------------------------------------------- Page 14 and page 15 compined ----------------------------------------------------------------- */}
         {/* Page 14 - Left 20% */}
-        <div className="page">
+        <div className="page leftPage">
           <p style={{ textAlign: 'left', paddingLeft: '10%',  fontSize: 'x-large' }}>{upscaleImagesArray[5]?.fields?.roomType || upscaleImagesArray[5]?.fields?.imageType}</p>
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex justify-end w-full h-[450px]">
             <div style={{ maxHeight: "200px", maxWidth: "270px", minWidth: "200px", overflow: "auto", padding: "2px" }}>
@@ -456,7 +456,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/* Page 15 - Right 80% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: 'x-large' }}>-</h1>
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex w-full h-[450px]">
             <div
@@ -479,7 +479,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
         {/*---{8}----------9 start------------------------------------------------- Page 16 and page 17 compined ----------------------------------------------------------------- */}
         {/* Left 70% */}
-        <div className="page">
+        <div className="page leftPage">
           {/* <p style={{textAlign:'left',paddingLeft:'3%',fontWeight:'500',fontSize:'x-large'}}>Living Room</p> */}
           <div style={{ paddingTop: '5%', paddingBottom: '5%' }} className="flex justify-end w-full h-[450px]">
             <div className="sixth-page-thumbnail-container-a1b2c3">
@@ -511,7 +511,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/*  Right 95% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: 'x-large' }}>-</h1>
           <div style={{ paddingLeft: '3%', paddingRight: '3%' }}>
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", }}>
@@ -545,7 +545,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
 
         {/*----{9}---------10 start------------------------------------------------- Page 18 and page 19 compined ----------------------------------------------------------------- */}
-        <div className="page">
+        <div className="page leftPage">
           {/* <p style={{textAlign:'left',paddingLeft:'3%',fontWeight:'500',fontSize:'x-large'}}>Living Room</p> */}
           <div style={{ position: "relative", top: "36px", paddingBottom: '5%' }} className="flex justify-end w-full h-[216px]">
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -577,7 +577,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/*  Right 95% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: 'x-large' }}>-</h1>
           <div className="gallery-abcdef">
             <img style={{ paddingLeft: "5px" }} src={upscaleImagesArray[7]?.upscaleImages[3]?.fields?.image_url?.text || 'https://know.dayrade.com/public/stylesheets/uploads/loading-screen.jpg'} alt="Thumbnail 3" />
@@ -618,7 +618,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
 
 
         {/*-----{10}--------11 start------------------------------------------------- Page 20 and page 21 compined ----------------------------------------------------------------- */}
-        <div className="page">
+        <div className="page leftPage">
           {/* <p style={{textAlign:'left',paddingLeft:'3%',fontWeight:'500',fontSize:'x-large'}}>Living Room</p> */}
           <div style={{ position: "relative", top: "36px", paddingBottom: '5%' }} className="flex justify-end w-full h-[216px]">
             <div style={{ display: "flex", flexDirection: "column" }}>
@@ -647,7 +647,7 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
         </div>
 
         {/*  Right 95% */}
-        <div className="page">
+        <div className="page rightPage">
           <h1 style={{ visibility: 'hidden', fontSize: 'x-large' }}>-</h1>
           <div className="gallery-abcdef">
             <img style={{ paddingLeft: "5px" }} src={upscaleImagesArray[8]?.upscaleImages[3]?.fields?.image_url?.text || 'https://know.dayrade.com/public/stylesheets/uploads/loading-screen.jpg'} alt="Thumbnail 3" />

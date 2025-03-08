@@ -170,7 +170,7 @@ const PropertyListings: React.FC = () => {
       .then(response => {
         PropertiesList=response?.data?.properties || [];
         console.log('response', response.data);
-        setUrls(response.data.properties.map((record: any) => 'https://nester.studio/?id='+record.fields.propertyId));
+        setUrls(response.data.properties.map((record: any) => 'https://nester.studio/property?id='+record.fields.propertyId));
         // setUrls(response.data.properties.map((record: any) => 'http://localhost:5173/?id='+record.fields.propertyId));
       })
       .catch(error => {
@@ -255,7 +255,7 @@ const PropertyListings: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {PropertiesList?.map(property => (
-            <div onClick={() => window.open(`/?id=${property.fields.propertyId}`, '_blank')} key={property.fields.propertyId} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+            <div onClick={() => window.open(`property-details/?id=${property.fields.propertyId}`, '_blank')} key={property.fields.propertyId} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
               <div className="relative aspect-[4/3]">
                 <img
                   src={property?.fields?.image.text || 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&q=80'}
