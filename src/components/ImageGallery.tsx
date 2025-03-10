@@ -19,19 +19,20 @@ const ImageGallery: React.FC = () => {
     { id: 'traditional', label: 'Traditional', value: 3 },
     { id: 'postModern', label: 'Post Modern', value: 4 },
   ];
-  let availableStyles :any
+  let availableStyles: any
   const getCurrentImage = () => {
     if (!PropertyDetails?.upscaleImagesArray) return '';
     const currentProperty = PropertyDetails.upscaleImagesArray[currentImageIndex];
-    if(currentProperty?.upscaleImages)
-    {
+    if (currentProperty?.upscaleImages) {
       availableStyles = styles.filter(style =>
-        currentProperty?.upscaleImages.some((image:any) => 
+        currentProperty?.upscaleImages.some((image: any) =>
           Number(image?.fields?.Design_Style) === style.value
-    )
-  );
-}
-    if (selectedStyle === 'original') {
+        )
+      );
+    }
+    console.log(availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original');
+    let filterNotAvailable = availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original'
+    if (selectedStyle === 'original' || filterNotAvailable == 'Original') {
       return currentProperty.fields?.webpSrc?.text || currentProperty.fields?.jpgSrc?.text;
     } else {
       const upscaleImages = currentProperty?.upscaleImages;
@@ -74,7 +75,19 @@ const ImageGallery: React.FC = () => {
   };
 
   const getActiveStyleLabel = () => {
-    return styles.find(style => style.id === selectedStyle)?.label || 'Original';
+    console.log(' getActiveStyleLabel selectedStyle', selectedStyle);
+    const currentProperty = PropertyDetails.upscaleImagesArray[currentImageIndex];
+    if (currentProperty?.upscaleImages) {
+      availableStyles = styles.filter(style =>
+        currentProperty?.upscaleImages.some((image: any) =>
+          Number(image?.fields?.Design_Style) === style.value
+        )
+      );
+      console.log(availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original')
+      return availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original';
+    } else {
+      return 'Original'
+    }
   };
 
   return (

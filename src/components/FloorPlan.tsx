@@ -124,7 +124,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ locationUrl }) => {
       <div className="bg-white rounded-lg shadow-lg p-6">
   <div style={{ width: '100%', height: 'calc(100vw * 9 / 16)', maxHeight: '100vh' }}>
     <GoogleMapReact
-      bootstrapURLKeys={{ key: "AIzaSyB9PcLKWa8tlffRPwBqioAq3415hvR1pBE" }}
+      bootstrapURLKeys={{ key: "AIzaSyCHEHwSGiIERi2NzArWJ040grySAB8Ngyc" }}
       center={markerPosition}
       zoom={12}
       options={{

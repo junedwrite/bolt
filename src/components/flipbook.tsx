@@ -22,24 +22,25 @@ const Flipbook: React.FC<FlipbookProps> = ({ property }) => {
     <div className="flipbook-container">
       <HTMLFlipBook
         width={540}
-        height={765}       // Updated height
+        height={765}
         minWidth={600}
         maxWidth={900}
         minHeight={600}
         maxHeight={1400}
         flippingTime={600}
-        drawShadow={false} // Disable shadow effect
+        drawShadow={true} // Enable shadow effect
         useMouseEvents={true}
         className="flipbook"
-        // style={{ border: "1px solid black", overflow: "hidden" }} // Ensure content doesn't overflow
-        style={{ boxShadow: "3px 3px 6px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5)" }} // Ensure content doesn't overflow
+        style={{ 
+          boxShadow: "3px 3px 10px rgba(0,0,0,0.3), -3px -3px 6px rgba(255,255,255,0.5)"
+        }}
         startPage={0}
-        size="fixed" // Prevent unexpected resizing
-        usePortrait={false} // Disabling portrait mode
+        size="fixed"
+        usePortrait={false}
         showCover={true}
         startZIndex={1}
-        autoSize={false} // Avoid automatic resizing issues
-        maxShadowOpacity={0} // Remove shadow completely
+        autoSize={false}
+        maxShadowOpacity={0.8} // Enable shadows for depth
         mobileScrollSupport={true}
         clickEventForward={true}
         swipeDistance={30}
