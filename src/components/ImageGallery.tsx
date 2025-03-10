@@ -19,20 +19,19 @@ const ImageGallery: React.FC = () => {
     { id: 'traditional', label: 'Traditional', value: 3 },
     { id: 'postModern', label: 'Post Modern', value: 4 },
   ];
-  let availableStyles: any
+  let availableStyles :any
   const getCurrentImage = () => {
     if (!PropertyDetails?.upscaleImagesArray) return '';
     const currentProperty = PropertyDetails.upscaleImagesArray[currentImageIndex];
-    if (currentProperty?.upscaleImages) {
+    if(currentProperty?.upscaleImages)
+    {
       availableStyles = styles.filter(style =>
-        currentProperty?.upscaleImages.some((image: any) =>
+        currentProperty?.upscaleImages.some((image:any) => 
           Number(image?.fields?.Design_Style) === style.value
-        )
-      );
-    }
-    console.log(availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original');
-    let filterNotAvailable = availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original'
-    if (selectedStyle === 'original' || filterNotAvailable == 'Original') {
+    )
+  );
+}
+    if (selectedStyle === 'original') {
       return currentProperty.fields?.webpSrc?.text || currentProperty.fields?.jpgSrc?.text;
     } else {
       const upscaleImages = currentProperty?.upscaleImages;
@@ -77,17 +76,25 @@ const ImageGallery: React.FC = () => {
   const getActiveStyleLabel = () => {
     console.log(' getActiveStyleLabel selectedStyle', selectedStyle);
     const currentProperty = PropertyDetails.upscaleImagesArray[currentImageIndex];
-    if (currentProperty?.upscaleImages) {
+    if(currentProperty?.upscaleImages)
+    {
       availableStyles = styles.filter(style =>
-        currentProperty?.upscaleImages.some((image: any) =>
+        currentProperty?.upscaleImages.some((image:any) => 
           Number(image?.fields?.Design_Style) === style.value
-        )
-      );
-      console.log(availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original')
-      return availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original';
-    } else {
-      return 'Original'
-    }
+    )
+  );
+  console.log(availableStyles.find((style:any) => style.id === selectedStyle)?.label || 'Original');
+  let filterNotAvailable = availableStyles.find((style: any) => style.id === selectedStyle)?.label || 'Original'
+  if(filterNotAvailable=='Original')
+  {
+      setSelectedStyle('original');
+      setIsComparing(false);
+  }
+  return availableStyles.find((style:any) => style.id === selectedStyle)?.label || 'Original';
+}else{
+  return 'Original'
+
+}
   };
 
   return (
