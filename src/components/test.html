@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nearby Cafés List with Distance</title>
+  <style>
+    #dummy-map { display: none; }
+    #places-list {
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h3>Nearby Cafés</h3>
+  <ul id="places-list"></ul>
+  <div id="dummy-map"></div>
+
+  <script>
+    let service;
+    let allResults = [];
+    let targetLocation;  // Declare globally
+
+    function initMap() {
+      // Initialize target location AFTER google is loaded
+      targetLocation = new google.maps.LatLng(19.35222538743708, -81.36984898650462);
+
+      const dummyMap = new google.maps.Map(document.getElementById("dummy-map"), {
+        center: targetLocation,
+        zoom: 15
+      });
+
+      const request = { location: targetLocation, radius: 5000, type: 'cafe' };
+      service = new google.maps.places.PlacesService(dummyMap);
+      service.nearbySearch(request, callback);
+    }
+
+    function callback(results, status, pagination) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        allResults = allResults.concat(results);
+        if (pagination && pagination.hasNextPage) {
+          setTimeout(() => { pagination.nextPage(); }, 200);
+        } else {
+          displayResults(allResults);
+        }
+      } else {
+        console.error("Places search failed: " + status);
+      }
+    }
+
+    function displayResults(results) {
+      const listElement = document.getElementById("places-list");
+      results.forEach(place => {
+        if (!place.geometry || !place.geometry.location) return;
+
+        const distanceInMeters = google.maps.geometry.spherical.computeDistanceBetween(targetLocation, place.geometry.location);
+        // const distanceInKm = (distanceInMeters / 1000).toFixed(2);
+        const distanceInMiles = (distanceInMeters / 1609.34).toFixed(2);
+
+        const li = document.createElement("li");
+        li.textContent = `${place.name} - ${place.vicinity} (Rating: ${place.rating || "N/A"}, Distance: ${distanceInMiles} miles)`;
+        listElement.appendChild(li);
+      });
+    }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAApV7-ljKUPi997PxS-ew_wyj4wAZEZhg&callback=initMap&libraries=places,geometry">
+  </script>
+</body>
+</html>

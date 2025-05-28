@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/property-details" element={<PropertyDetail />} />
         <Route path="/listings" element={<PropertyListings />} />
+        <Route path="/listing-documents" element={<PropertyListings />} />
       </Routes>
     </div>
   );

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Nearby Cafés List using Places API (New)</title>
+  <style>
+    /* The dummy map is hidden since we only need it to initialize the PlacesService */
+    #dummy-map {
+      display: none;
+    }
+    /* Style for the list of places */
+    #places-list {
+      margin-top: 20px;
+      font-family: Arial, sans-serif;
+    }
+  </style>
+</head>
+<body>
+  <h3>Nearby Cafés</h3>
+  <ul id="places-list"></ul>
+  
+  <!-- Dummy map container required for PlacesService initialization -->
+  <div id="dummy-map"></div>
+  
+  <script>
+    let service;
+    let allResults = [];
+
+    function initMap() {
+      // Define the target location (latitude & longitude)
+      const location = new google.maps.LatLng(19.35222538743708, -81.36984898650462);
+
+      // Create a dummy map (hidden) to initialize the PlacesService
+      const dummyMap = new google.maps.Map(document.getElementById("dummy-map"), {
+        center: location,
+        zoom: 15
+      });
+
+      // Define the request to search for nearby cafés within a 5000-meter radius.
+      const request = {
+        location: location,
+        radius: 5000, // Adjust the radius as needed
+        type: 'cafe'
+      };
+
+      // Initialize the PlacesService using the dummy map
+      service = new google.maps.places.PlacesService(dummyMap);
+      service.nearbySearch(request, callback);
+    }
+
+    // Callback to process search results and handle pagination if available
+    function callback(results, status, pagination) {
+      if (status === google.maps.places.PlacesServiceStatus.OK) {
+        // Append this batch of results
+        allResults = allResults.concat(results);
+        // Check for additional pages of results
+        if (pagination && pagination.hasNextPage) {
+          setTimeout(() => {
+            pagination.nextPage();
+          }, 200);
+        } else {
+          // Once all results are collected, display them in the list
+          displayResults(allResults);
+        }
+      } else {
+        console.error("Places search failed: " + status);
+      }
+    }
+
+    // Display the list of cafés in the HTML unordered list
+    function displayResults(results) {
+      const listElement = document.getElementById("places-list");
+      results.forEach(place => {
+        const li = document.createElement("li");
+        li.textContent = `${place.name} - ${place.vicinity} (Rating: ${place.rating || "N/A"})`;
+        listElement.appendChild(li);
+      });
+    }
+  </script>
+  
+  <!-- Load the Google Maps API asynchronously with the Places library -->
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAApV7-ljKUPi997PxS-ew_wyj4wAZEZhg&callback=initMap&libraries=places">
+  </script>
+</body>
+</html>
