@@ -46,7 +46,7 @@ const ImageGallery: React.FC = () => {
     if (selectedStyle === 'original') {
       if (!PropertyDetails.upscaleImagesArray) return '';
       // return images[currentImageIndex].original;
-      return PropertyDetails.upscaleImagesArray[currentImageIndex].fields.webpSrc.text;
+      return PropertyDetails.upscaleImagesArray[currentImageIndex]?.fields.webpSrc.text;
     }
     console.log('selectedStyle',selectedStyle)
     console.log('Style value', styles.find(style => 
@@ -68,11 +68,11 @@ const ImageGallery: React.FC = () => {
         );
       
         if (selectedImage) {
-          return selectedImage.fields.image_url.text;
+          return selectedImage?.fields?.image_url?.text;
         }
       
         // Fallback return if no matching image is found
-        return upscaleImages[0].fields.image_url.text;
+        return upscaleImages[0]?.fields?.image_url?.text;
       }
       
     }
