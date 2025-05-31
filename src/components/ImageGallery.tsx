@@ -32,7 +32,7 @@ const ImageGallery: React.FC = () => {
   );
 }
     if (selectedStyle === 'original') {
-      return currentProperty.fields?.webpSrc?.text || currentProperty.fields?.jpgSrc?.text;
+      return currentProperty?.fields?.webpSrc?.text || currentProperty?.fields?.jpgSrc?.text;
     } else {
       const upscaleImages = currentProperty?.upscaleImages;
       const selectedFilterIndex =
@@ -41,8 +41,8 @@ const ImageGallery: React.FC = () => {
         (image: any) => Number(image?.fields?.Design_Style) === selectedFilterIndex
       );
       return selectedImage
-        ? selectedImage.fields?.image_url?.text
-        : upscaleImages[0].fields?.image_url?.text;
+        ? selectedImage?.fields?.image_url?.text
+        : upscaleImages[0]?.fields?.image_url?.text;
     }
   };
 
